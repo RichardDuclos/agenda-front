@@ -1,0 +1,85 @@
+<div id="root" class=" hidden">
+    <div class="login-register-wrapper">
+        <div class="login-register-tab-wrapper">
+            <div  id="login-tab" class="login-register-tab active">Se connecter</div>
+            <div id="register-tab" class="login-register-tab inactive">S'inscrire</div>
+
+        </div>
+        <div class="form-group login-register-form">
+            <div id="form-login" class=" auth-form active">
+                <div class="form-input-wrapper">
+                    <div class="animated-form-group">
+                        <input class="animated-form-control" id="login-username" placeholder="Nom d'utilisateur">
+                        <label id="label-login-username" for="login-username" class="animated-form-label">Nom d'utilisateur</label>
+                    </div>
+                </div>
+                <div class="form-input-wrapper">
+                    <div class="animated-form-group">
+                        <input class="animated-form-control" id="login-password" type="password" placeholder="Mot de passe" >
+                        <label id="label-login-password" for="login-password" class="animated-form-label">Mot de passe</label>
+                    </div>
+                </div>
+                <div class="error hidden" id="login-wrong-id">Le nom d'utilisateur ou mot de passe est incorrect</div>
+                <button class="action-button" id="login-submit">Me connecter</button>
+            </div>
+            <div id="form-register" class=" auth-form">
+                <div class="form-input-wrapper">
+                    <div class="animated-form-group">
+                        <input class="animated-form-control" id="register-username" placeholder="Entre votre nom d'utilisateur">
+                        <label id="label-register-username" for="register-username" class="animated-form-label">Nom d'utilisateur</label>
+                    </div>
+                    <div class="error hidden" id="register-username-empty">Ce champ est requis</div>
+                    <div class="error hidden" id="register-username-too-short">Votre nom d'utilisateur doit faire 5 caractères ou plus</div>
+                    <div class="error hidden" id="register-username-too-long">Votre nom d'utilisateur doit faire 30 caractères ou moins</div>
+                    <div class="error hidden" id="register-username-already-taken">Ce nom d'utilisateur est deja pris</div>
+                </div>
+                <div class="form-input-wrapper">
+                    <div class="animated-form-group">
+                        <input class="animated-form-control" id="register-firstname" placeholder="Entre votre prénom">
+                        <label id="label-register-firstname" for="register-firstname" class="animated-form-label">Prénom</label>
+                    </div>
+                    <div class="error hidden" id="register-firstname-empty">Ce champ est requis</div>
+                    <div class="error hidden" id="register-firstname-too-long">Votre prénom doit faire 60 caractères ou moins</div>
+
+                </div>
+                <div class="form-input-wrapper">
+                    <div class="animated-form-group">
+                        <input class="animated-form-control" id="register-lastname" placeholder="Entre votre nom">
+                        <label id="label-register-lastname" for="register-lastname" class="animated-form-label">Nom</label>
+                    </div>
+                    <div class="error hidden" id="register-lastname-empty">Ce champ est requis</div>
+                    <div class="error hidden" id="register-lastname-too-long">Votre nom doit faire 60 caractères ou moins</div>
+                </div>
+                <div class="form-input-wrapper">
+                    <div class="animated-form-group">
+                        <input class="animated-form-control" id="register-password" type="password" placeholder="Entrez votre mot de passe">
+                        <label id="label-register-password" for="register-password" class="animated-form-label">Mot de passe</label>
+                    </div>
+                    <div class="error hidden" id="register-password-empty">Ce champ est requis</div>
+                    <div class="error hidden" id="register-password-too-short">Votre mot de passe doit faire 8 caractères minimum</div>
+                    <div class="error hidden" id="register-password-too-long">Votre mot de passe doit faire 256 caractères maximum</div>
+                    <div class="error hidden" id="register-password-no-number">Votre mot de passe doit contenir des chiffres</div>
+                    <div class="error hidden" id="register-password-no-letter">Votre mot de passe doit contenir des lettres</div>
+                    <div class="error hidden" id="register-password-no-lowercase">Votre mot de passe doit contenir des lettres minuscules</div>
+                    <div class="error hidden" id="register-password-no-uppercase">Votre mot de passe doit contenir des lettres majuscules</div>
+
+                </div>
+                <div class="form-input-wrapper">
+                    <div class="animated-form-group">
+                        <input class="animated-form-control" id="register-password-confirm" type="password" placeholder="Confirmez le mot de passe">
+                        <label id="label-register-password-confirm" for="register-password-confirm" class="animated-form-label">Confirmer le mot de passe</label>
+                    </div>
+                    <div class="error hidden" id="register-password-confirm-empty">Ce champ est requis</div>
+                    <div class="error hidden" id="register-password-confirm-no-match">Les mots de passe ne correspondent pas</div>
+
+                </div>
+
+
+                <button class="action-button" id="register-submit">Créer mon compte</button>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

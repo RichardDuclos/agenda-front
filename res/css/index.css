@@ -1,0 +1,293 @@
+
+:root{
+    --primary : #5C6BC0;
+    --primary-accent : #4356b4;
+    --primary-light : #7988e5;
+    --primary-accent-transparent : rgba(92 107 192 / 50%);
+    --darkened-transparent : rgba(0, 0, 0, .02);
+}
+body.light, body {
+    --primary-text-color: #373D3F;
+    --secondary-text-color: white;
+    --primary-background-color: white;
+}
+body.dark {
+    --primary-text-color: white;
+    --secondary-text-color: #373D3F;
+    --primary-background-color: #36393F;
+
+}
+
+body {
+    background-color: var(--primary-background-color);
+}
+#themeSwitch {
+    background-color: var(--primary-background-color);
+}
+/*          NAVBAR          */
+.bg-primary {
+    background-color: var(--primary) !important;
+}
+.navbar-nav {
+    width: 100%;
+}
+.nav-item.last {
+    margin-right: auto;
+}
+.nav-link {
+    cursor: pointer;
+}
+.theme-icon{
+    height: 1.75em;
+    margin-right: 0.4rem;
+    margin-left: 0.4rem;
+}
+/*          GENERAL          */
+label {
+    user-select: none;
+}
+#loginpassword {
+    margin-top: 10px;
+}
+div#registerConfirm {
+    font-size: 18px;
+}
+.hidden {
+    display: none;
+}
+.icon-button{
+    background: none;
+    border: none;
+    transition: 0.2s;
+}
+.icon-button:hover{
+    filter: brightness(0.6);
+}
+#main-spinner{
+    position: fixed;
+    z-index: 1031; /* High z-index so it is on top of the page */
+    top: 50%;
+    right: 50%; /* or: left: 50%; */
+    margin-top: -1.5rem; /* half of the elements height */
+    margin-right: -1.5rem; /* half of the elements widht */
+    height: 3rem;
+    width: 3rem;
+}
+.erreur {
+    color : red;
+}
+#loginResult{
+    margin-top: 1rem;
+    min-height: 1em;
+}
+#login_modal{
+}
+.modal-spinner{
+    position: absolute;
+    z-index: 1031; /* High z-index so it is on top of the page */
+    top: 50%;
+    right: 50%; /* or: left: 50%; */
+    margin-top: -1.5rem; /* half of the elements height */
+    margin-right: -1.5rem; /* half of the elements widht */
+    height: 3rem;
+    width: 3rem;
+}
+.error-register{
+    min-height: 1em;
+}
+.button{
+    width: fit-content;
+    padding: 7px 25px;
+    background-color: var(--primary);
+    border: 1px solid var(--primary);
+    border-radius: 5px;
+    color: white;
+    transition: 0.2s;
+}
+.button:hover {
+    background-color: var(--primary-accent);
+
+}
+.page-title{
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+}
+.action-button{
+    background-color: var(--primary);
+    border: none;
+    color: white;
+    border-radius: 5px;
+    padding: 10px 20px;
+    transition: 0.2s;
+    display: block;
+    margin-left: auto;
+}
+.action-button:hover{
+    background-color: var(--primary-accent);
+
+}
+/*              LOGIN / REGISTER         */
+.login-register-wrapper {
+    width: 100%;
+    margin: auto;
+    margin-top: 200px;
+    left: 50%;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    border-radius: 13px 13px 0 0;
+}
+@media (min-width:600px) {
+    .login-register-wrapper {
+        width: 75%;
+        border-left: 1px solid grey;
+        border-right: 1px solid grey;
+        border-radius: 13px;
+    }
+}
+@media (min-width:1024px) {
+    .login-register-wrapper {
+        width: 50%;
+        border-left: 1px solid grey;
+        border-right: 1px solid grey;
+        border-radius: 13px;
+    }
+}
+.login-register-form{
+
+    padding: 0px 20px 50px 20px;
+
+}
+.login-register-tab-wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    margin-bottom: 50px;
+}
+.login-register-tab{
+    display: inline-block;
+    font-size: 1.25em;
+    width: 100%;
+    padding: 5px 20px 5px 20px;
+    background-color: var(--primary);
+    color: white;
+    margin: auto;
+    user-select: none;
+    cursor: pointer;
+    box-shadow: inset 0px -13px 29px -24px #000000;
+
+}
+.login-register-tab.active{
+    background-color: transparent;
+    color: var(--primary-text-color);
+    cursor: auto;
+    box-shadow: none;
+}
+#login-tab {
+    border-radius: 10px 0 10px 0;
+
+}
+
+#register-tab {
+    border-radius: 0 10px 0 10px;
+
+}
+
+
+.auth-form {
+    display: none;
+}
+.auth-form.active {
+    display: block;
+}
+
+.animated-form-group{
+    transition: all .3s;
+}
+.animated-form-control{
+    user-select: none;
+    box-shadow: none;
+    background-color: rgba(0, 0, 0, .02);
+    border-radius: 0;
+    border-color: #ccc;
+    color: var(--primary-text-color);
+    border-style: none none solid none;
+    width: 100%;
+    transition: all .5s;
+}
+.animated-form-control.error {
+    border-color: red;
+}
+.animated-form-control:-webkit-autofill,
+.animated-form-control:-webkit-autofill:hover,
+.animated-form-control:-webkit-autofill:focus{
+    border-color: var(--primary);
+    border-style: none none solid none;
+    -webkit-text-fill-color: var(--primary-text-color);;
+    -webkit-box-shadow: 0 0 0px 1000px var(--darkened-transparent) inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+.animated-form-control.error:-webkit-autofill,
+.animated-form-control.error:-webkit-autofill:hover,
+.animated-form-control.error:-webkit-autofill:focus{
+    border-color: red;
+
+}
+.animated-form-control::placeholder {
+    color: transparent;
+    padding: 5px;
+}
+.animated-form-control:focus{
+    box-shadow: none;
+    outline: none;
+    border-color: var(--primary)
+}
+.animated-form-control.error:focus{
+    border-color: red;
+}
+.animated-form-control:focus + .animated-form-label,
+.animated-form-control:not(:placeholder-shown) +  .animated-form-label
+{
+    transform: translateY(-2.5em) scale(.8);
+}
+.animated-form-group:focus-within {
+}
+.animated-form-label{
+    cursor: text;
+    position: absolute;
+    font-size: 1em;
+    color: #aaa;
+    display: block;
+    opacity: 1;
+    transform: translateY(-1.5em);
+    transform-origin: 0 0;
+    transition: all .3s;
+    user-select: none;
+}
+.animated-form-label.error {
+    color: red;
+}
+.error {
+    color: red;
+}
+.form-input-wrapper{
+    margin-bottom: 1em;
+}
+
+/*          ADD TASK         */
+
+.task-form {
+    width: 100%;
+    margin: auto;
+    margin-top: 200px;
+    left: 50%;
+}
+@media (min-width:600px) {
+    .task-form {
+        width: 75%;
+    }
+}
+@media (min-width:1024px) {
+    .task-form {
+        width: 50%;
+    }
+}

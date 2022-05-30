@@ -1,0 +1,62 @@
+<div id="root" class="hidden">
+    <div class="container">
+        <div class="form-group task-form">
+            <h3>Création d'une nouvelle tâche</h3>
+            <div class="form-input-wrapper">
+                <div class="animated-form-group">
+                    <input class="animated-form-control" id="name" placeholder="Nom">
+                    <label id="label-name" for="name" class="animated-form-label">Nom</label>
+                </div>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="wholeDay">
+                <label class="form-check-label" for="wholeDay">
+                    Toute la journée
+                </label>
+            </div>
+            <div id="dont-show-wholeday">
+                <div id="form-frequency">
+                    Fréquence
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Ponctuelle
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" >
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Journalière
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" >
+                        <label class="form-check-label" for="flexRadioDefault3">
+                            Hebdomadaire
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" >
+                        <label class="form-check-label" for="flexRadioDefault4">
+                            Mensuelle
+                        </label>
+                    </div>
+                </div>
+                <div id="form-time">
+                    Heure début
+                    <input type="time" name="" min="08:00" max="16:00" value="08:00">
+                    Heure fin
+                    <input type="time" name="" min="09:00" max="17:00" value="09:00">
+                </div>
+            </div>
+            <div class="hidden" id="show-wholeday">
+                Jours début
+                <input type="date" name="" id="">
+                Jours fin
+                <input type="date" name="" id="">
+            </div>
+
+        </div>
+    </div>
+</div>
