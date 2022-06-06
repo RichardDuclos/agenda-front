@@ -1,11 +1,11 @@
-class IndexController extends BaseController {
+class LoginController extends BaseController {
     constructor() {
         super()
 
         this.isConnected()
             .then(result => {
                 if(result.status === 204) {
-                    navigate("addTask")
+                    navigate("calendarView")
                 } else {
                     this.setTitle("Se connecter");
                     this.root = document.getElementById("root")
@@ -195,13 +195,14 @@ class IndexController extends BaseController {
         if(error) {
             return;
         }
+        const userRepository = new UserRepository()
         this.showMainSpinner()
-        User.login(this.loginUsername.value, this.loginPassword.value)
+        userRepository.login(this.loginUsername.value, this.loginPassword.value)
             .then(result => {
                 /*Success*/
                 this.hideMainSpinner();
                 LocalStorage.saveToken(result.response.token);
-                navigate("addTask");
+                navigate("calendarView");
             })
             .catch(err => {
                 this.hideMainSpinner();
@@ -317,12 +318,12 @@ class IndexController extends BaseController {
         if(erreur) {
             return;
         }
+        const userRepository = new UserRepository()
         this.showMainSpinner()
-        User.register(this.registerUsername.value, this.registerFirstname.value,
+        userRepository.register(this.registerUsername.value, this.registerFirstname.value,
             this.registerLastname.value, this.registerPassword.value, this.registerPasswordConfirm.value)
             .then(result => {
                 this.hideMainSpinner()
-                console.log(result)
                 this.emptyRegisterFields();
                 this.switchForm("login")
 
@@ -332,7 +333,6 @@ class IndexController extends BaseController {
             this.hideMainSpinner()
             if(err.status === 400) /* field validation failed */ {
                 err.response.errors.forEach(error => {
-                    console.log(error.param, error.msg)
                         if(error.param === 'username') {
                             if(error.msg === "missing") {
                                 this.showError(this.registerUsernameEmpty)
@@ -418,4 +418,4 @@ class IndexController extends BaseController {
     }
 }
 
-window.indexController = new IndexController()
+window.loginController = new LoginController()

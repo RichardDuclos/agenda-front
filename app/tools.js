@@ -1,7 +1,7 @@
 function $(selector, f) {
     if (f == undefined)
         return document.querySelector(selector)
-    else 
+    else
         document.querySelectorAll(selector).forEach(f)
 }
 

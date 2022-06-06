@@ -1,0 +1,117 @@
+<div id="root" class="hidden">
+    <div class="container">
+        <button type="button" class="hidden btn btn-primary" id="showModal" data-bs-toggle="modal" data-bs-target="#taskModal">
+            Launch demo modal
+        </button>
+
+        <div class="calendar-switch-wrapper">
+            <input type="radio" name="radioCalendar" id="radioCalendarMonth" class="radioCalendar">
+            <label for="radioCalendarMonth" class="calendar-switch-button action-button">Mois</label>
+            <input type="radio" name="radioCalendar" id="radioCalendarWeek" class="radioCalendar">
+            <label for="radioCalendarWeek" class=" calendar-switch-button action-button">Semaines</label>
+            <input type="radio" name="radioCalendar" id="radioCalendarDay" class="radioCalendar">
+            <label for="radioCalendarDay" class="calendar-switch-button action-button">Jours</label>
+        </div>
+        <div id="calendar-month" class="hidden" data-name="month">
+            <div id="calendar-month-nav-header">
+                <div id="month-name">
+                    Lorem Ipsum
+                </div>
+                <div id="calendar-month-navigation">
+                    <button class="action-button calendar-navigation" id="month-calendar-previous">Précédent</button>
+                    <button class="action-button calendar-navigation" id="month-calendar-next">Suivant</button>
+                    <button class="action-button calendar-navigation" id="month-calendar-reset">Réinitialiser</button>
+                </div>
+            </div>
+
+            <div class="row calendar_month_header">
+                <div class="col day_name_header">Lun.</div>
+                <div class="col day_name_header">Mar.</div>
+                <div class="col day_name_header">Mer.</div>
+                <div class="col day_name_header">Jeu.</div>
+                <div class="col day_name_header">Ven.</div>
+            </div>
+            <div  id="calendar-month-body">
+
+            </div>
+
+        </div>
+        <div data-name="week" id="calendar-week" class="hidden">
+            <div id="calendar-week-nav-header">
+                <div id="week-name">
+                    Lorem Ipsum
+                </div>
+                <div id="calendar-week-navigation">
+                    <button class="action-button calendar-navigation" id="week-calendar-previous">Précédent</button>
+                    <button class="action-button calendar-navigation" id="week-calendar-next">Suivant</button>
+                    <button class="action-button calendar-navigation" id="week-calendar-reset">Réinitialiser</button>
+                </div>
+            </div>
+
+            <div class="row calendar_month_header">
+                <div class="col day_name_header">Lun.</div>
+                <div class="col day_name_header">Mar.</div>
+                <div class="col day_name_header">Mer.</div>
+                <div class="col day_name_header">Jeu.</div>
+                <div class="col day_name_header">Ven.</div>
+            </div>
+            <div  id="calendar-week-body">
+
+            </div>
+        </div>
+        <div data-name="day" id="calendar-day" class="hidden">
+                <div id="calendar-day-nav-header">
+                    <div id="day-name">
+                        Lorem Ipsum
+                    </div>
+                    <div id="calendar-day-navigation">
+                        <button class="action-button calendar-navigation" id="day-calendar-previous">Précédent</button>
+                        <button class="action-button calendar-navigation" id="day-calendar-next">Suivant</button>
+                        <button class="action-button calendar-navigation" id="day-calendar-reset">Réinitialiser</button>
+                    </div>
+                </div>
+
+                <div class="row calendar_month_header">
+                    <div class="col day_name_header" id="calendar-day-day-name-header">Lundi</div>
+                </div>
+                <div  id="calendar-day-body">
+
+                </div>
+
+        </div>
+    </div>
+
+</div>
+<div class="modal" id="taskModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modifier la tâche</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <button class="edit" type="button" id="editUpdate"><span class="edit-icon"></span><span id="editLabel">Modifier</span></button>
+                <div class="animated-form-group" id="update-form-name-wrapper">
+                    <input class="animated-form-control" id="update-form-name" placeholder="Nom">
+                    <label id="label-name" for="update-form-name" class="animated-form-label">Nom</label>
+                </div>
+                <label for="update-form-progress" class="form-label" id="update-form-progress-label">Progression</label>
+                <div class="update-form-progress-wrap">
+                    <input type="range" class="form-range" min="0" max="100" step="10" id="update-form-progress">
+                    <div id="update-form-progress-value">100</div>
+                </div>
+                <div class="form-check" id="applyToAllWrapper">
+                    <input class="form-check-input" type="checkbox" value="" id="applyToAll">
+                    <label class="form-check-label" for="applyToAll">
+                        Appliquer à toutes les occurences
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeModal">Fermer</button>
+                <button type="button" class="btn btn-primary" id="updateSave">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+</div>
+

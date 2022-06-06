@@ -1,6 +1,6 @@
 class LocalStorage {
     static saveToken(token) {
-        localStorage.setItem("jwt", token);
+        return localStorage.setItem("jwt", token);
     }
     static getToken() {
         return localStorage.getItem("jwt")
@@ -13,6 +13,15 @@ class LocalStorage {
     }
     static setTheme(theme) {
         return localStorage.setItem("theme", theme)
+    }
+    static setFavoriteCalendar(calendar) {
+        return localStorage.setItem("favorite-calendar", calendar)
+    }
+    static getFavoriteCalendar() {
+        return localStorage.getItem("favorite-calendar")
+    }
+    static removeFavoriteCalendar() {
+        return localStorage.removeItem("favorite-calendar²")
     }
 
 }

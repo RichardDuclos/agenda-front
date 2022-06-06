@@ -12,7 +12,7 @@ class AgendaAPI {
             }
         }
     }
-    Register(username, firstname, lastname, password, passwordConfirm) {
+    postUser(username, firstname, lastname, password, passwordConfirm) {
         this.option.headers.Authorization = ''
         this.option.method = 'POST'
         let payload = {
@@ -25,6 +25,33 @@ class AgendaAPI {
         payload = JSON.stringify(payload)
         this.option.body = payload;
         return this.myFetch('users', this.option)
+    }
+    getAllTasks(token) {
+        this.option.headers.Authorization = `Bearer ${token}`
+        this.option.method = "GET"
+        this.option.body = undefined
+        return this.myFetch('tasks', this.option)
+
+    }
+    postTask(token, name, date, begginingDate, endDate, wholeDay, begginingTime, endTime, frequency) {
+        this.option.headers.Authorization = `Bearer ${token}`
+        this.option.method = 'POST'
+        let payload = {
+            name: name,
+            wholeDay: wholeDay,
+            frequency: frequency
+        }
+        if(wholeDay) {
+            payload.begginingDate = begginingDate
+            payload.endDate = endDate
+        } else {
+            payload.date = date
+            payload.begginingTime = begginingTime
+            payload.endTime = endTime
+        }
+        payload = JSON.stringify(payload)
+        this.option.body = payload
+        return this.myFetch('tasks', this.option)
     }
     Authenticate(username, password) {
         this.option.headers.Authorization = ''
@@ -42,7 +69,6 @@ class AgendaAPI {
         return new Promise((resolve, reject) => {
             fetch(`${this.api}${url}`, option)
                 .then(response => {
-                    console.log(response)
 
                     if(response.status === 200) {
                         response.json()
@@ -64,6 +90,19 @@ class AgendaAPI {
                     }
                 })
         })
+    }
+    putTask(token, id, name, progress, repeatingId, applyToAll) {
+        this.option.headers.Authorization = `Bearer ${token}`
+        this.option.method = 'PUT'
+        let payload = {
+            name: name,
+            progression: progress,
+            repeatingId: repeatingId,
+            applyToAll: applyToAll
+        }
+        payload = JSON.stringify(payload)
+        this.option.body = payload
+        return this.myFetch(`tasks/${id}`, this.option)
     }
 
     async checkToken(token) {

@@ -9,14 +9,8 @@ class User {
         this.birthday = birthday;
         this.role = role
     }
-    static async register(username, firstname, lastname, password, passwordConfirm) {
-        let agendaAPI= new AgendaAPI();
-        return  await agendaAPI.Register(username, firstname, lastname, password, passwordConfirm);
-    }
-    static async login(email, password) {
-        let agendaAPI = new AgendaAPI();
-        return await agendaAPI.Authenticate(email, password);
-    }
+
+
     static async getUser(id, token) {
         let datingAPI = new AgendaAPI();
         const res = await datingAPI.getUser(id, token);
@@ -30,7 +24,20 @@ class User {
     }
 
 }
-
+class Task {
+    constructor(id, name, date, begginingDate, endDate, wholeDay, begginingTime, endTime, progression, repeatingId) {
+        this.id = id
+        this.name = name
+        this.date = date
+        this.begginingDate = begginingDate
+        this.endDate = endDate
+        this.wholeDay = wholeDay
+        this.begginingTime = begginingTime
+        this.endTime = endTime
+        this.progression = progression
+        this.repeatingId = repeatingId
+    }
+}
 
 class Token {
     static async checkToken() {
@@ -39,7 +46,6 @@ class Token {
             return false;
         }
         let agendaAPI = new AgendaAPI();
-        console.log(JSON.stringify(token))
         return await agendaAPI.checkToken(token)
     }
 

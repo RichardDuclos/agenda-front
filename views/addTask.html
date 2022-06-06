@@ -19,43 +19,77 @@
                 <div id="form-frequency">
                     Fréquence
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                        <input class="form-check-input" type="radio" name="frequencyRadio" id="flexRadioDefault1" checked value="0">
                         <label class="form-check-label" for="flexRadioDefault1">
                             Ponctuelle
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" >
+                        <input class="form-check-input" type="radio" name="frequencyRadio" id="flexRadioDefault2" value="1" >
                         <label class="form-check-label" for="flexRadioDefault2">
                             Journalière
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" >
+                        <input class="form-check-input" type="radio" name="frequencyRadio" id="flexRadioDefault3" value="2">
                         <label class="form-check-label" for="flexRadioDefault3">
                             Hebdomadaire
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" >
+                        <input class="form-check-input" type="radio" name="frequencyRadio" id="flexRadioDefault4" value="3" >
                         <label class="form-check-label" for="flexRadioDefault4">
                             Mensuelle
                         </label>
                     </div>
                 </div>
+                <div id="form-date">
+                    <div>Date</div>
+                    <input type="date" name="" id="datePicker" class="form-control">
+                </div>
                 <div id="form-time">
-                    Heure début
-                    <input type="time" name="" min="08:00" max="16:00" value="08:00">
-                    Heure fin
-                    <input type="time" name="" min="09:00" max="17:00" value="09:00">
+                    <div>
+                        <div>Heure début</div>
+                        <select id="begginingTimePicker" class="form-control">
+                            <option value="8" selected>08:00</option>
+                            <option value="9">09:00</option>
+                            <option value="10">10:00</option>
+                            <option value="11">11:00</option>
+                            <option value="12">12:00</option>
+                            <option value="13">13:00</option>
+                            <option value="14">14:00</option>
+                            <option value="15">15:00</option>
+                            <option value="16">16:00</option>
+                        </select>
+                    </div>
+                    <div>
+                        <div>Heure fin</div>
+                        <select id="endTimePicker" type="time" min="09:00" max="17:00" value="09:00" class="form-control">
+                            <option value="9" selected>09:00</option>
+                            <option value="10">10:00</option>
+                            <option value="11">11:00</option>
+                            <option value="12">12:00</option>
+                            <option value="13">13:00</option>
+                            <option value="14">14:00</option>
+                            <option value="15">15:00</option>
+                            <option value="16">16:00</option>
+                            <option value="17">17:00</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="hidden" id="show-wholeday">
-                Jours début
-                <input type="date" name="" id="">
-                Jours fin
-                <input type="date" name="" id="">
+                <div>
+                    <div>Date début</div>
+                    <input type="date" name="" id="begginingDatePicker" class="form-control">
+                </div>
+                <div>
+                    <div>Date fin</div>
+                    <input type="date" name="" id="endDatePicker" class="form-control">
+                </div>
             </div>
+            <button class="action-button" id="add-task-submit">Confirmer</button>
+
 
         </div>
     </div>

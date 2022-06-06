@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:600');
 
 :root{
     --primary : #5C6BC0;
@@ -5,16 +6,24 @@
     --primary-light : #7988e5;
     --primary-accent-transparent : rgba(92 107 192 / 50%);
     --darkened-transparent : rgba(0, 0, 0, .02);
+    --task-late : #ff3e3e;
+    --task-done : #5dff34;
+    --task : var(--primary);
+    --task-wip: #ffdd00;
 }
 body.light, body {
     --primary-text-color: #373D3F;
     --secondary-text-color: white;
     --primary-background-color: white;
+    --light-darken-dark-lighten: rgba(0,0,0,.15);
+    --calendar-cells-border: #ddd;
 }
 body.dark {
     --primary-text-color: white;
     --secondary-text-color: #373D3F;
     --primary-background-color: #36393F;
+    --light-darken-dark-lighten: rgba(255,255,255,.15);
+    --calendar-cells-border: #505050;
 
 }
 
@@ -119,13 +128,24 @@ div#registerConfirm {
     border-radius: 5px;
     padding: 10px 20px;
     transition: 0.2s;
-    display: block;
+    display: inline-block;
     margin-left: auto;
 }
-.action-button:hover{
+
+.action-button:not(:disabled):hover{
     background-color: var(--primary-accent);
+}
+.action-button:disabled:hover {
+    cursor: not-allowed;
+}
+.action-button:active {
+    filter: opacity(0.75);
 
 }
+.action-button:disabled {
+    filter: opacity(0.5);
+}
+
 /*              LOGIN / REGISTER         */
 .login-register-wrapper {
     width: 100%;
@@ -280,6 +300,7 @@ div#registerConfirm {
     margin: auto;
     margin-top: 200px;
     left: 50%;
+    color: var(--primary-text-color);
 }
 @media (min-width:600px) {
     .task-form {
@@ -291,3 +312,287 @@ div#registerConfirm {
         width: 50%;
     }
 }
+#add-task-submit {
+    margin-top: 15px;
+}
+
+/*      TASK DISPLAY        */
+#calendar{
+    margin-top: 50px;
+}
+#calendar2{
+    margin-top: 50px;
+}
+.calendar_month_week-wrapper {
+    border-bottom: 1px solid var(--calendar-cells-border);
+}
+#calendar2 > .calendar_month_week-wrapper:first-child {
+    border-top: 1px solid var(--calendar-cells-border);
+}
+.calendar_month_day_wrapper, .calendar_week_day_wrapper, .calendar_day_day_wrapper  {
+    padding: 0;
+    border-right: 1px solid var(--calendar-cells-border);
+    box-sizing: border-box;
+    position: relative;
+    color: var(--primary-text-color)
+}
+.calendar_month_week-wrapper > .calendar_month_day_wrapper:first-child, .calendar_week_week-wrapper > .calendar_week_day_wrapper:first-child {
+    border-left: 1px solid var(--calendar-cells-border);
+}
+.day_number_wrapper {
+    height: 2em;
+    font-size: 1.2em;
+    text-align: center;
+    background-color: var(--light-darken-dark-lighten);
+}
+#calendar-month .task-content{
+    width: 100%;
+    height: calc(2em * 10);
+    position: relative;
+}
+#calendar-week .task-content{
+    width: 100%;
+    height: calc(60px * 10);
+    position: relative;
+}
+#calendar-day .task-content{
+    width: 100%;
+    height: calc(60px * 10);
+    position: relative;
+}
+.task-body{
+    width: 100%;
+    background-color: var(--task);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+}
+.task-body>* {
+    background-color: var(--task);
+
+}
+.task-name {
+    margin-left: 5px;
+    height: 1em;
+    line-height: 1;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.task-progress{
+    height: 0.8em;
+    margin-top: auto;
+}
+.task-progress progress {
+    width: 100%;
+}
+progress::-moz-progress-bar ,
+.task-progress progress {
+    width: 100%;
+}
+.day_name_header {
+    border-right: 1px solid var(--calendar-cells-border);
+    text-align: center;
+    padding: 10px 0;
+    font-size: 1.2em;
+    background-color: var(--primary);
+    color: white;
+}
+.calendar_month_header>.day_name_header:first-child, .calendar_week_header>.day_name_header:first-child, .calendar_day_header>.day_name_header:first-child{
+    border-left: 1px solid var(--calendar-cells-border);
+}
+.calendar_month_day_wrapper.inactive {
+    filter: opacity(0.25);
+}
+.calendar_month_day_wrapper.current .day_number_wrapper, .calendar_week_day_wrapper.current .day_number_wrapper, .calendar_day_day_wrapper.current .day_number_wrapper  {
+    box-shadow: inset 0px 0px 0px 2px var(--primary-light);
+}
+#month-name, #week-name, #day-name {
+    color: var(--primary-text-color);
+    font-size: 2.5em;
+    font-weight: 500;
+    text-align: center;
+}
+.calendar-navigation {
+    display: inline-block;
+    margin: 10px;
+}
+
+#calendar-month-nav-header, #calendar-week-nav-header , #calendar-day-nav-header {
+    display: flex;
+    flex-direction: row;
+}
+#calendar-month-navigation , #calendar-week-navigation, #calendar-day-navigation{
+     margin-left: auto;
+     display: flex;
+     flex-direction: row;
+     align-items: center;
+ }
+@media (max-width:800px) {
+    #calendar-month-nav-header, #calendar-week-nav-header, #calendar-day-nav-header {
+        flex-direction: column;
+    }
+    #calendar-month-navigation, #calendar-week-navigation, #calendar-day-navigation{
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+    }
+
+}
+
+.task-wrapper{
+    position: relative;
+}
+.task-background {
+    position: absolute;
+    height: 100%; width: 100%;
+    top: 0; left: 0;
+    opacity: 0.2;
+}
+.task-background .task-background-row {
+    height: calc(100%/10);
+}
+.task-background .task-background-col {
+    display: grid;
+    place-content: center;
+    height: 100%;
+    border-bottom: 1px solid var(--calendar-cells-border);
+    padding: 0;
+    z-index: -1;
+
+}
+.radioCalendar {
+    display: none;
+}
+.radioCalendar:checked+label {
+    background-color: var(--primary-accent);
+}
+.calendar-switch-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 10px;
+}
+
+.calendar-switch-button {
+    margin-left: 0;
+    border-radius: 0;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.calendar-switch-wrapper label:first-of-type {
+    border-radius: 5px 0 0 5px;
+}
+.calendar-switch-wrapper label:last-of-type {
+    border-radius: 0 5px 5px 0;
+}
+.update-form-progress-wrap{
+    display: flex;
+}
+#update-form-progress-value {
+    width: 60px;
+    text-align: center;
+}
+#update-form-progress-label {
+    margin: 0;
+}
+#update-form-name-wrapper{
+    margin-bottom: 10px;
+}
+#taskModal .modal-content {
+    color: var(--primary-text-color);
+    background-color: var(--primary-background-color);
+}
+
+.edit {
+    background: var(--primary);
+    border: 0;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 20px;
+    height: 30px;
+    line-height: 30px;
+    outline: none;
+    padding: 0;
+    padding-right: 10px;
+    position: relative;
+    -webkit-transition: background .4s;
+    transition: background .4s;
+}
+.edit:hover {
+    background: var(--primary-accent);
+}
+.edit span {
+    display: inline-block;
+    float: left;
+}
+.edit .edit-icon {
+    height: 30px;
+    position: relative;
+    width: 30px;
+}
+.edit .edit-icon:before {
+    border: 3px solid #fff;
+    border-radius: 3px;
+    content: "";
+    display: inline-block;
+    height: 50%;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    width: 50%;
+    transform: translate(-50%, -50%);
+}
+.edit .edit-icon:after {
+    background: var(--primary);
+    border: 2px #fff solid;
+    border-bottom-left-radius: 5px 15px;
+    border-bottom-right-radius: 5px 15px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    box-shadow: 0 0 0 2px var(--primary);
+    content: "";
+    display: inline-block;
+    height: 55%;
+    position: absolute;
+    top: 7%;
+    left: 45%;
+    width: 6px;
+    transform: translate(0, 0) rotate(45deg);
+    transform-origin: 50% 75%;
+    transition: background .4s, box-shadow .4s;
+}
+.edit:hover span:after {
+    background: var(--primary-accent);
+    box-shadow: 0 0 0 2px var(--primary-accent);
+    animation: wiggle .25s 3 linear;
+}
+
+@keyframes wiggle {
+    0% {transform: translate(0,0) rotate(45deg);}
+    25% {transform: translate(0,0) rotate(25deg);}
+    50% {transform: translate(0,0) rotate(45deg);}
+    75% {transform: translate(0,0) rotate(65deg);}
+    100% {transform: translate(0,0) rotate(45deg);}
+}
+.edit{
+    display: block;
+    margin-left: auto;
+}
+input:disabled {
+    opacity: 0.5;
+}
+/*      SETTINGS        */
+.theme-toggle-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+}
+.

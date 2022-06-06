@@ -1,7 +1,7 @@
-class IndexController extends BaseController {
+class addTaskController extends BaseController {
+
     constructor() {
         super()
-
         this.isConnected()
             .then(result => {
                 if(result.status !== 204) {
@@ -15,13 +15,28 @@ class IndexController extends BaseController {
                     this.divDontShowWholeDay = document.getElementById("dont-show-wholeday")
                     this.checkWholeDay = document.getElementById("wholeDay")
                     this.checkWholeDay.onclick = e => this.toggleFrequency(e.currentTarget.checked)
+                    this.taskName = document.getElementById("name")
+                    this.datePicker = document.getElementById("datePicker")
+                    const today = new Date().toISOString().split('T')[0]
+                    this.datePicker.setAttribute('min', today)
+                    this.begginingDatePicker = document.getElementById("begginingDatePicker")
+                    this.begginingDatePicker.setAttribute('min', today)
+                    this.endDatePicker = document.getElementById("endDatePicker")
+                    this.endDatePicker.setAttribute('min', today)
+                    this.addTaskSubmit = document.getElementById("add-task-submit")
+                    this.frequencyRadios = document.getElementsByName("frequencyRadio")
+                    this.begginingTimePicker = document.getElementById("begginingTimePicker")
+                    this.endTimePicker = document.getElementById("endTimePicker")
+                    this.addTaskSubmit.onclick = e => this.addTaskSubmitHandler()
                     this.arrayFormField = {
                         loginUsername: {
                             input : this.loginUsername,
                             label: document.getElementById("label-login-username")
                         },
                     }
-
+                    const datePickerTest = document.getElementById("datepicker-test")
+                    /*const datepicker = new Datepicker(datePickerTest, {
+                    });*/
                     this.errors = [
 
                     ]
@@ -65,55 +80,45 @@ class IndexController extends BaseController {
     hideError(error) {
         error.classList.add("hidden");
     }
-    switchForm(formName) {
-        if(this.currentForm === formName) {
-            return;
+    addTaskSubmitHandler() {
+        const name = this.taskName.value;
+        const wholeDay = this.checkWholeDay.checked
+        let frequency = null
+        for (const radio of this.frequencyRadios) {
+            if(radio.checked) {
+                frequency = radio.value
+            }
         }
-        this.currentForm = formName
-        this.arrayForm.forEach(form => {
-
-            if(form.name === formName) {
-                form.form.classList.add("active")
-                form.tab.classList.add("active")
-            } else {
-                form.form.classList.remove("active")
-                form.tab.classList.remove("active")
-            }
-        });
-        /*if(formName === "register") {
-            if(this.currentForm === "register") {
-                return;
-            }
-
-            this.currentForm = "register"
-            this.registerForm.classList.add("active");
-            this.loginForm.classList.remove("active");
-
-            this.registerTab.classList.add("active")
-            this.registerTab.classList.remove("inactive")
-            this.loginTab.classList.add("inactive")
-            this.loginTab.classList.remove("active")
-
-        } else if(formName === "login") {
-            if(this.currentForm === "login") {
-                return;
-            }
-            this.currentForm = "login"
-            this.registerForm.classList.remove("active");
-            this.loginForm.classList.add("active");
-
-            this.registerTab.classList.remove("active")
-            this.registerTab.classList.add("inactive")
-            this.loginTab.classList.remove("inactive")
-            this.loginTab.classList.add("active")
+        let date = null
+        let begginingTime = null
+        let endTime = null
+        let begginingDate = null
+        let endDate = null
+        if(wholeDay) {
+            frequency = 0
+            begginingDate = this.begginingDatePicker.value
+            endDate = this.endDatePicker.value
         } else {
-            console.log("unknown form")
-        }*/
-    }
+            date = this.datePicker.value
+            begginingTime = this.begginingTimePicker.value
+            endTime = this.endTimePicker.value
+        }
+        const taskRepository = new TaskRepository()
+        console.log(name, wholeDay, frequency, date, begginingTime,
+            endTime, begginingDate, endDate)
+        const jwt = LocalStorage.getToken()
+        taskRepository.create(jwt, name, date, begginingDate, endDate, wholeDay, begginingTime, endTime, frequency)
+            .then(result => {
+                console.log(result)
+            })
+            .catch(err => {
+                console.log(err)
 
+            })
+    }
     emptyFields() {
 
     }
 }
 
-window.indexController = new IndexController()
+window.addTaskController = new addTaskController()
