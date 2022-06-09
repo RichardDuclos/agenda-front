@@ -1,3 +1,94 @@
 <div id="root" class="hidden">
+    <div class="container">
+        <div id="select-table-wrapper">
+            <select class="form-select" aria-label="Selection du filtre" id="listChangeSelect">
+                <option selected value="all">Toutes les tâches</option>
+                <option value="late" >Tâches en retard</option>
+                <option value="current">Tâches en cours</option>
+                <option value="future">Tâches futures</option>
+                <option value="completed">Tâches terminées</option>
+            </select>
+        </div>
+        <div id="all-tasks-wrapper" class="data-table-wrapper">
+            <table style="width: 100%;"  id="all-tasks" class="data-table table table-striped">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Heure de début</th>
+                    <th>Heure de fin</th>
+                    <th>Date</th>
+                    <th>Progression</th>
+                </tr>
+                </thead>
+                <tbody id="all-tasks-body">
+
+                </tbody>
+            </table>
+        </div>
+        <div id="late-tasks-wrapper" class="data-table-wrapper">
+            <table style="width: 100%;"  id="late-tasks" class="data-table table table-striped">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Heure de début</th>
+                    <th>Heure de fin</th>
+                    <th>Date</th>
+                    <th>Progression</th>
+                </tr>
+                </thead>
+                <tbody id="late-tasks-body">
+
+                </tbody>
+            </table>
+        </div>
+        <div id="current-tasks-wrapper" class="data-table-wrapper">
+            <table style="width: 100%;"  id="current-tasks" class="data-table table table-striped">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Heure de début</th>
+                    <th>Heure de fin</th>
+                    <th>Date</th>
+                    <th>Progression</th>
+                </tr>
+                </thead>
+                <tbody id="current-tasks-body">
+
+                </tbody>
+            </table>
+        </div>
+        <div id="future-tasks-wrapper" class="data-table-wrapper">
+            <table style="width: 100%;"  id="future-tasks" class="data-table table table-striped">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Heure de début</th>
+                    <th>Heure de fin</th>
+                    <th>Date</th>
+                    <th>Progression</th>
+                </tr>
+                </thead>
+                <tbody id="future-tasks-body">
+
+                </tbody>
+            </table>
+        </div>
+        <div id="completed-tasks-wrapper" class="data-table-wrapper">
+            <table style="width: 100%;"  id="completed-tasks" class="data-table table table-striped">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Heure de début</th>
+                    <th>Heure de fin</th>
+                    <th>Date</th>
+                    <th>Progression</th>
+                </tr>
+                </thead>
+                <tbody id="completed-tasks-body">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </div>

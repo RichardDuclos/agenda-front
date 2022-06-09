@@ -113,7 +113,8 @@ class LoginController extends BaseController {
                         }
                     ]
                 }
-            });
+            })
+
     }
     enableInputError(fieldGroup) {
         fieldGroup.input.classList.add("error")

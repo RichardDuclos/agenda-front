@@ -40,7 +40,8 @@ class SettingsController extends BaseController {
 
 
                 }
-            });
+            })
+
     }
     toggleTheme(checked) {
         if(checked) {

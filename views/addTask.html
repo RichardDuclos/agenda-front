@@ -8,7 +8,9 @@
                     <label id="label-name" for="name" class="animated-form-label">Nom</label>
                 </div>
             </div>
-
+            <div class="error form-error hidden" id="missingName">
+                Ce champ est requis
+            </div>
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="wholeDay">
                 <label class="form-check-label" for="wholeDay">
@@ -43,13 +45,96 @@
                         </label>
                     </div>
                 </div>
-                <div id="form-date">
-                    <div>Date</div>
-                    <input type="date" name="" id="datePicker" class="form-control">
+                <div id="ponctual-fields" >
+                    <label class="form-label" for="ponctualDatePicker">Date</label>
+                    <input type="date" name="" id="ponctualDatePicker" class="form-control">
+                    <div class="error form-error hidden" id="missingPonctualDate">
+                        Ce champ est requis
+                    </div>
+                </div>
+                <div id="daily-fields">
+                    <label class="form-label" for="dailyBegginingDatePicker">Du</label>
+                    <input type="date" name="" id="dailyBegginingDatePicker" class="form-control">
+                    <div class="error form-error hidden" id="missingDailyBegginingDate">
+                        Ce champ est requis
+                    </div>
+                    <label class="form-label" for="dailyEndDatePicker">Au</label>
+                    <input type="date" name="" id="dailyEndDatePicker" class="form-control">
+                    <div class="error form-error hidden" id="missingDailyEndDate">
+                        Ce champ est requis
+                    </div>
+                </div>
+                <div id="weekly-fields">
+                    <label class="form-label" for="weeklyBegginingDatePicker">Du</label>
+                    <input type="date" name="" id="weeklyBegginingDatePicker" class="form-control">
+                    <div class="error form-error hidden" id="missingWeeklyBegginingDate">
+                        Ce champ est requis
+                    </div>
+                    <label class="form-label" for="weeklyEndDatePicker">Au</label>
+                    <input type="date" name="" id="weeklyEndDatePicker" class="form-control">
+                    <div class="error form-error hidden" id="missingWeeklyEndDate">
+                        Ce champ est requis
+                    </div>
+                    <label class="form-label">Jour de la semaine</label>
+                    <select id="dayOfWeekPicker" class="form-control">
+                        <option value="1">Lundi</option>
+                        <option value="2">Mardi</option>
+                        <option value="3">Mercredi</option>
+                        <option value="4">Jeudi</option>
+                        <option value="5">Vendredi</option>
+                    </select>
+                </div>
+                <div id="monthly-fields">
+                    <label class="form-label" for="monthlyBegginingDatePicker">Du</label>
+                    <input type="date" name="" id="monthlyBegginingDatePicker" class="form-control">
+                    <div class="error form-error hidden" id="missingMonthlyBegginingDate">
+                        Ce champ est requis
+                    </div>
+                    <label class="form-label" for="monthlyEndDatePicker">Au</label>
+                    <input type="date" name="" id="monthlyEndDatePicker" class="form-control">
+                    <div class="error form-error hidden" id="missingMonthlyEndDate">
+                        Ce champ est requis
+                    </div>
+                    <label class="form-label">Numéro mensuel</label>
+                    <select id="dayOfMonthPicker" class="form-control">
+                        <option value="1">01</option>
+                        <option value="2">02</option>
+                        <option value="3">03</option>
+                        <option value="4">04</option>
+                        <option value="5">05</option>
+                        <option value="6">06</option>
+                        <option value="7">07</option>
+                        <option value="8">08</option>
+                        <option value="9">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="31">31</option>
+
+                    </select>
                 </div>
                 <div id="form-time">
                     <div>
-                        <div>Heure début</div>
+                        <label class="form-label" for="begginingTimePicker">Heure début</label>
                         <select id="begginingTimePicker" class="form-control">
                             <option value="8" selected>08:00</option>
                             <option value="9">09:00</option>
@@ -60,12 +145,13 @@
                             <option value="14">14:00</option>
                             <option value="15">15:00</option>
                             <option value="16">16:00</option>
+                            <option value="17">17:00</option>
                         </select>
                     </div>
                     <div>
-                        <div>Heure fin</div>
-                        <select id="endTimePicker" type="time" min="09:00" max="17:00" value="09:00" class="form-control">
-                            <option value="9" selected>09:00</option>
+                        <label class="form-label" for="endTimePicker">Heure fin</label>
+                        <select id="endTimePicker" class="form-control">
+                            <option value="9" >09:00</option>
                             <option value="10">10:00</option>
                             <option value="11">11:00</option>
                             <option value="12">12:00</option>
@@ -74,7 +160,11 @@
                             <option value="15">15:00</option>
                             <option value="16">16:00</option>
                             <option value="17">17:00</option>
+                            <option value="18" selected>18:00</option>
                         </select>
+                        <div class="error form-error hidden" id="mustBeSuperiorThanBegginingTime">
+                            Veuillez choisir une heure de fin ultérieure à l'heure de début
+                        </div>
                     </div>
                 </div>
             </div>
@@ -82,11 +172,33 @@
                 <div>
                     <div>Date début</div>
                     <input type="date" name="" id="begginingDatePicker" class="form-control">
+                    <div class="error form-error hidden" id="missingWholedayBegginingDate">
+                        Ce champ est requis
+                    </div>
                 </div>
                 <div>
                     <div>Date fin</div>
                     <input type="date" name="" id="endDatePicker" class="form-control">
+                    <div class="error form-error hidden" id="missingWholedayEndDate">
+                        Ce champ est requis
+                    </div>
                 </div>
+            </div>
+
+            <div class="success hidden" id="taskSuccess">
+                Tâche ajoutée avec succès
+            </div>
+            <div class="success hidden" id="tasksSuccess">
+                Tâches ajoutées avec succès
+            </div>
+            <div class="error form-error hidden" id="conflictError">
+                Cette tâche rentre en conflit avec une tâche déjà existante
+            </div>
+            <div class="error form-error hidden" id="conflictErrors">
+                Une des tâches rentre en conflit avec une tâche déjà existante
+            </div>
+            <div class="error form-error hidden" id="unknownError">
+                Une erreur est survenue
             </div>
             <button class="action-button" id="add-task-submit">Confirmer</button>
 

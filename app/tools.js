@@ -1,9 +1,4 @@
-function $(selector, f) {
-    if (f == undefined)
-        return document.querySelector(selector)
-    else
-        document.querySelectorAll(selector).forEach(f)
-}
+
 
 function fetchJSON(url, token) {
     const headers = new Headers();
@@ -25,7 +20,7 @@ function include(selector, url, urlcontroller) {
     fetch(url, {cache: "no-cache"})
         .then(res => res.text())
         .then(html => {
-            $(`#${selector}`).innerHTML = html
+            document.querySelector(`#${selector}`).innerHTML = html
             fetch (urlcontroller, {cache: "no-cache"})
                 .then(res => res.text())
                 .then(js => {

@@ -28,8 +28,9 @@ class calendarViewController extends BaseController {
         this.isConnected()
             .then(result =>  {
                 if(result.status !== 204) {
+                    navigate("login")
                 } else {
-                    this.setTitle("Affichage des tâches");
+                    this.setTitle("Calendrier des tâches");
                     this.root = document.getElementById("root")
                     this.setNavbarLinks(true, "displayTask");
                     //this.initializeCalendar()
@@ -70,6 +71,10 @@ class calendarViewController extends BaseController {
                     this.dayCalendarDayNameHeader = document.getElementById("calendar-day-day-name-header")
 
                     this.currentDate = new Date()
+                    this.currentDate.setHours(2)
+                    this.currentDate.setMinutes(0)
+                    this.currentDate.setSeconds(0)
+                    this.currentDate.setMilliseconds(0)
                     this.monthCalendarSelectedYear = this.currentDate.getFullYear()
                     this.monthCalendarSelectedMonth = this.currentDate.getMonth()
                     this.weekCalendarSelectedWeek = this.getWeekNumber(this.currentDate)[1]
@@ -108,21 +113,31 @@ class calendarViewController extends BaseController {
                     } else {
                         this.monthCalendarRadio.click()
                     }
-
+                    this.modalDeleteConfirm = document.getElementById("deleteConfirm")
                     this.showModal = document.getElementById("showModal")
                     this.updateFormName = document.getElementById("update-form-name")
                     this.updateFormProgress = document.getElementById("update-form-progress")
                     this.updateFormProgressValue = document.getElementById("update-form-progress-value")
                     this.updateFormProgress.oninput = e => this.updateFormProgressValue.innerText = e.currentTarget.value
+                    this.deleteTask = document.getElementById("delete-task")
+                    this.deleteAllTasks = document.getElementById("delete-all-tasks")
                     this.applyToAll = document.getElementById("applyToAll")
                     this.applyToAllWrapper = document.getElementById("applyToAllWrapper")
                     this.closeModal = document.getElementById("closeModal")
+                    this.closeConfirmDelete = document.getElementById("closeConfirmDelete")
+                    this.closeConfirmDeleteAll = document.getElementById("closeConfirmDeleteAll")
+                    this.deleteConfirmationCloseButtons = document.getElementsByClassName("delete-confirmation-close")
+
+                    this.confirmDeleteTask = document.getElementById("confirm-delete-task")
+                    this.confirmDeleteTaskAll = document.getElementById("confirm-delete-task-all")
+
                     this.updateSave = document.getElementById("updateSave")
                     this.disabledField = false;
                     this.editLabel = document.getElementById("editLabel")
                     this.editUpdate = document.getElementById("editUpdate")
                     this.saveName = ""
                     this.saveProgress = 0
+                    this.editWhenStarted = document.getElementById("edit-when-started")
                     this.saveApply = false
                     this.editUpdate.onclick = e => this.toggleDisabledField()
 
@@ -130,11 +145,11 @@ class calendarViewController extends BaseController {
 
                     this.fillCalendars().then(result => {
                         this.root.classList.remove("hidden")
-
                     })
 
                 }
-            });
+            })
+
     }
     showCalendar(calendarName) {
         this.calendarBodies.forEach(calendar => {
@@ -172,7 +187,8 @@ class calendarViewController extends BaseController {
                     task.begginingDate.getMonth() !== task.endDate.getMonth() ||
                     task.begginingDate.getFullYear() !== task.endDate.getFullYear())
             ) {
-                if(task.begginingDate < this.dayCalendarSelectedDate && this.dayCalendarSelectedDate < task.endDate)
+
+                if(task.begginingDate <= this.dayCalendarSelectedDate && this.dayCalendarSelectedDate <= task.endDate)
                 {
                     const difference = ((task.endDate - task.begginingDate) / (1000 * 3600 * 24)) + 1
                     let cpt = 1
@@ -180,6 +196,11 @@ class calendarViewController extends BaseController {
                     while(loopDay.getFullYear() !== task.endDate.getFullYear() ||
                         loopDay.getMonth() !== task.endDate.getMonth() ||
                         loopDay.getDate() !== task.endDate.getDate() + 1) {
+                        if(loopDay.getDay() === 6 || loopDay.getDay() === 0) {
+                            while(loopDay.getDay() !== 1) {
+                                loopDay.setDate(loopDay.getDate() + 1)
+                            }
+                        }
                         if(loopDay.getFullYear() === this.dayCalendarSelectedDate.getFullYear() &&
                             loopDay.getMonth() === this.dayCalendarSelectedDate.getMonth() &&
                             loopDay.getDate() === this.dayCalendarSelectedDate.getDate()) {
@@ -192,7 +213,12 @@ class calendarViewController extends BaseController {
                     }
                 }
             } else {
-                this.displayTask(task, this.dayCalendarDay, true, "day")
+                if(this.currentDate.getFullYear() === this.dayCalendarSelectedDate.getFullYear() &&
+                    this.currentDate.getMonth() === this.dayCalendarSelectedDate.getMonth() &&
+                    this.currentDate.getDate() === this.dayCalendarSelectedDate.getDate()) {
+                    this.displayTask(task, this.dayCalendarDay, true, "day")
+                }
+
             }
         })
     }
@@ -240,13 +266,19 @@ class calendarViewController extends BaseController {
                 if(
                     (task.begginingDate <= monday && task.endDate >= monday) ||
                     (task.begginingDate <= friday && task.endDate >= friday) ||
-                    (task.begginingDate > monday && task.endDate < friday)
+                    (task.begginingDate > monday && task.endDate < friday) ||
+                    (task.begginingDate <= monday && task.endDate <= friday)
                 ) {
                     loopDay = new Date(task.begginingDate)
                     let cpt = 1;
                     while(loopDay.getFullYear() !== task.endDate.getFullYear() ||
                         loopDay.getMonth() !== task.endDate.getMonth() ||
                         loopDay.getDate() !== task.endDate.getDate() + 1) {
+                        if(loopDay.getDay() === 6 || loopDay.getDay() === 0) {
+                            while(loopDay.getDay() !== 1) {
+                                loopDay.setDate(loopDay.getDate() + 1)
+                            }
+                        }
                         const day = this.calendarWeekBody.querySelector(`[data-date="${loopDay.toLocaleDateString("fr")}"]`)
                         if(day) {
                             task.displayName = `${cpt} - ${task.name}`
@@ -319,16 +351,21 @@ class calendarViewController extends BaseController {
                         if(
                             (task.begginingDate <= firstDayOfDisplayedMonth && task.endDate >= firstDayOfDisplayedMonth) ||
                             (task.begginingDate <= lastDayOfDisplayedMonth && task.endDate >= lastDayOfDisplayedMonth) ||
-                            (task.begginingDate > firstDayOfDisplayedMonth && task.endDate < lastDayOfDisplayedMonth)
+                            (task.begginingDate > firstDayOfDisplayedMonth && task.endDate < lastDayOfDisplayedMonth) ||
+                            (task.begginingDate <= firstDayOfDisplayedMonth && task.endDate <= lastDayOfDisplayedMonth)
+
                         ) {
                             loopDay = new Date(task.begginingDate)
                             let cpt = 1
                             while(loopDay.getFullYear() !== task.endDate.getFullYear() ||
                             loopDay.getMonth() !== task.endDate.getMonth() ||
                             loopDay.getDate() !== task.endDate.getDate() + 1) {
-
+                                if(loopDay.getDay() === 6 || loopDay.getDay() === 0) {
+                                    while(loopDay.getDay() !== 1) {
+                                        loopDay.setDate(loopDay.getDate() + 1)
+                                    }
+                                }
                                 const day = this.calendarMonthBody.querySelector(`[data-date="${loopDay.toLocaleDateString("fr")}"]`)
-                                console.log(day)
 
                                 if(day) {
                                     task.displayName = `${cpt} - ${task.name}`
@@ -387,33 +424,67 @@ class calendarViewController extends BaseController {
     }
     displayTask(task, day, displayData, calendar) {
         const taskWrapper = day.getElementsByClassName("task-content")[0]
-        const begginingTime = task.wholeDay ? 8 : parseInt(task.begginingTime.substring(0, 2))
         if(task.displayName === undefined) {
             task.displayName = task.name
         }
-        const endTime = task.wholeDay ? 18 : parseInt(task.endTime.substring(0, 2))
-        taskWrapper.innerHTML += this.getTaskBody(task.id, task.name, task.displayName, begginingTime, endTime, task.progression, displayData, calendar, task.repeatingId)
+        taskWrapper.innerHTML += this.getTaskBody(task, calendar, displayData)
     }
-    taskClickHandler(id, name, progress, repeatingId) {
-        name = decodeURI(name)
-        name = name.replace(/%27/, "'")
-        this.updateFormName.value = name
-        this.updateFormProgress.value = progress
-        this.updateFormProgressValue.innerText = progress
-        const task = {
-            id: id,
-            name: name,
-            progress: progress,
-            repeatingId: repeatingId
+    taskClickHandler(textTask) {
+        let task = textTask.replace(/%27/, "'")
+        task = decodeURI(textTask)
+        task = JSON.parse(task)
+        if(task.date) {
+            task.date = new Date(task.date)
         }
-        if(repeatingId === null) {
-            this.applyToAllWrapper.classList.remove("hidden")
-        } else {
+        if(task.begginingDate) {
+            task.begginingDate = new Date(task.begginingDate)
+        }
+        if(task.endDate) {
+            task.endDate = new Date(task.endDate)
+        }
+        this.updateFormName.value = task.name
+        this.updateFormProgress.value = task.progression
+        this.updateFormProgressValue.innerText = task.progression
+        if(task.repeatingId === null) {
             this.applyToAllWrapper.classList.add("hidden")
+        } else {
+                this.applyToAllWrapper.classList.remove("hidden")
+        }
+        if((task.date && (task.date > this.currentDate) ||
+            (task.begginingDate && (task.begginingDate > this.currentDate)))
+            ) {
+            this.editUpdate.classList.add("hidden")
+            this.updateSave.classList.add("hidden")
+            this.editWhenStarted.classList.remove("hidden")
+        } else {
+            this.editUpdate.classList.remove("hidden")
+            this.updateSave.classList.remove("hidden")
+            this.editWhenStarted.classList.add("hidden")
 
         }
         this.updateSave.onclick = e => this.updateTaskHandler(task)
+        this.confirmDeleteTask.onclick = e => this.deleteTaskHandler(task, false)
+        this.confirmDeleteTaskAll.onclick = e => this.deleteTaskHandler(task, true)
+        if(task.repeatingId === null) {
+            this.deleteAllTasks.classList.add("disabled")
+        } else {
+            this.deleteAllTasks.classList.remove("disabled")
+        }
         this.showModal.click()
+    }
+    deleteTaskHandler(task, applyToAll) {
+        const taskRepository = new TaskRepository()
+        const jwt = LocalStorage.getToken()
+        taskRepository.delete(jwt, task, applyToAll)
+            .then(result => {
+                this.fillCalendars()
+                for(const button of this.deleteConfirmationCloseButtons) {
+                    button.click()
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
     updateTaskHandler(task) {
         const taskRepository = new TaskRepository()
@@ -512,7 +583,6 @@ class calendarViewController extends BaseController {
         this.monthCalendarReset.disabled = true;
         this.fillCalendars()
     }
-
     previousWeekHandler() {
         if(this.weekCalendarSelectedWeek > 1) {
             this.weekCalendarSelectedWeek--
@@ -880,9 +950,9 @@ class calendarViewController extends BaseController {
         return [d.getUTCFullYear(), weekNo];
     }
 
-    getTaskBody(id, name, displayName, begginingTime, endTime, progress, displayText, calendar, repeatingId) {
-        begginingTime = begginingTime - 8
-        endTime = endTime - 8
+    getTaskBody(task, calendar, displayText) {
+        const begginingTime = (task.wholeDay ? 8 : parseInt(task.begginingTime.substring(0, 2))) - 8
+        const endTime = (task.wholeDay ? 18 : parseInt(task.endTime.substring(0, 2))) - 8
         let height;
         if(calendar === "month") {
             height = "2em"
@@ -891,17 +961,22 @@ class calendarViewController extends BaseController {
         } else if(calendar === "day") {
             height = "60px"
         }
+
         const duration = endTime - begginingTime
+        const stringTask = encodeURI((JSON.stringify(task)).replace(/'/g, "%27"))
         let result = `
         <div class="task-body"
             style="height: calc(${height}*${duration}); position: absolute; top: calc(${height}*${begginingTime})" 
-            onclick="window.calendarViewController.taskClickHandler('${id}', '${encodeURI(name.replace(/'/g, "%27"))}', '${progress}', '${repeatingId}')">`
+                        onclick="window.calendarViewController.taskClickHandler('${stringTask}')"
+
+            >`
         if(displayText) {
             result += `
-            <div class="task-name">${displayName}</div>
+            <div class="task-name">${task.displayName}</div>
             <div class="task-progress">
-                <progress max="100"  value="${progress}"></progress>
-            </div>`
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: ${task.progression}%;" aria-valuenow="${task.progression}" aria-valuemin="0" aria-valuemax="100">${task.progression=== 100 ? 'Terminée': `${task.progression}%`}</div>
+`
         }
 
         result += `

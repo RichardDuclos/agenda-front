@@ -33,7 +33,7 @@ class AgendaAPI {
         return this.myFetch('tasks', this.option)
 
     }
-    postTask(token, name, date, begginingDate, endDate, wholeDay, begginingTime, endTime, frequency) {
+    postTask(token, name, date, begginingDate, endDate, wholeDay, begginingTime, endTime, frequency, dayOfWeek, dayOfMonth) {
         this.option.headers.Authorization = `Bearer ${token}`
         this.option.method = 'POST'
         let payload = {
@@ -45,11 +45,24 @@ class AgendaAPI {
             payload.begginingDate = begginingDate
             payload.endDate = endDate
         } else {
-            payload.date = date
+            if(frequency === 0) {
+                payload.date = date
+            } else if(frequency > 0) {
+                payload.begginingDate = begginingDate
+                payload.endDate = endDate
+            }
+            if(frequency === 2) {
+                payload.dayOfWeek = dayOfWeek
+            }
+            if(frequency === 3) {
+                payload.dayOfMonth = dayOfMonth
+            }
             payload.begginingTime = begginingTime
             payload.endTime = endTime
         }
         payload = JSON.stringify(payload)
+        console.log(payload)
+
         this.option.body = payload
         return this.myFetch('tasks', this.option)
     }
@@ -76,7 +89,6 @@ class AgendaAPI {
                                 resolve({status: response.status, response: json})
 
                             })
-
                     } else if(response.status === 201 || response.status === 204) {
                         resolve({status: response.status, response: null})
                     } else if(response.status === 400) {
@@ -89,22 +101,36 @@ class AgendaAPI {
                         reject({status: response.status, response: null})
                     }
                 })
+                .catch(error => {
+                    baseController.toast("no-connection")
+                    reject({status: 999, response: null})
+                })
+
+
         })
     }
-    putTask(token, id, name, progress, repeatingId, applyToAll) {
+    putTask(token, task, applyToAll) {
         this.option.headers.Authorization = `Bearer ${token}`
         this.option.method = 'PUT'
         let payload = {
-            name: name,
-            progression: progress,
-            repeatingId: repeatingId,
+            name: task.name,
+            progression: task.progression,
+            repeatingId: task.repeatingId,
             applyToAll: applyToAll
         }
         payload = JSON.stringify(payload)
         this.option.body = payload
-        return this.myFetch(`tasks/${id}`, this.option)
+        return this.myFetch(`tasks/${task.id}`, this.option)
     }
-
+    deleteTask(token, task, applyToAll) {
+        this.option.headers.Authorization = `Bearer ${token}`
+        this.option.method = 'DELETE'
+        this.option.body = JSON.stringify({
+            applyToAll: applyToAll,
+            repeatingId: task.repeatingId
+        })
+        return this.myFetch(`tasks/${task.id}`, this.option)
+    }
     async checkToken(token) {
         this.option.headers.Authorization = `Bearer ${token}`
         this.option.method = "GET"

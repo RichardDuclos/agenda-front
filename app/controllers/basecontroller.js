@@ -1,4 +1,3 @@
-
 class BaseController {
 
     constructor() {
@@ -44,6 +43,11 @@ class BaseController {
                 link.style.display = "none"
             }
         } else {
+            const links = document.getElementsByClassName("nav-item");
+
+            for(let link of links) {
+                link.style.display = "list-item"
+            }
             const activableLinks = document.getElementsByClassName("activable-link");
 
             for(let activableLink of activableLinks) {

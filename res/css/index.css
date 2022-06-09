@@ -4,6 +4,7 @@
     --primary : #5C6BC0;
     --primary-accent : #4356b4;
     --primary-light : #7988e5;
+    --secondary: #ff9913;
     --primary-accent-transparent : rgba(92 107 192 / 50%);
     --darkened-transparent : rgba(0, 0, 0, .02);
     --task-late : #ff3e3e;
@@ -16,20 +17,26 @@ body.light, body {
     --secondary-text-color: white;
     --primary-background-color: white;
     --light-darken-dark-lighten: rgba(0,0,0,.15);
+    --light-darken-dark-lighten-current: rgba(0,0,0,.25);
     --calendar-cells-border: #ddd;
+    --success : green;
+
 }
 body.dark {
     --primary-text-color: white;
     --secondary-text-color: #373D3F;
     --primary-background-color: #36393F;
     --light-darken-dark-lighten: rgba(255,255,255,.15);
+    --light-darken-dark-lighten-current: rgba(255,255,255,.05);
     --calendar-cells-border: #505050;
+    --success : yellowgreen;
 
 }
 
 body {
     background-color: var(--primary-background-color);
 }
+
 #themeSwitch {
     background-color: var(--primary-background-color);
 }
@@ -55,6 +62,9 @@ body {
 label {
     user-select: none;
 }
+.success {
+    color: var(--success)
+}
 #loginpassword {
     margin-top: 10px;
 }
@@ -62,7 +72,7 @@ div#registerConfirm {
     font-size: 18px;
 }
 .hidden {
-    display: none;
+    display: none !important;
 }
 .icon-button{
     background: none;
@@ -384,6 +394,35 @@ div#registerConfirm {
     height: 0.8em;
     margin-top: auto;
 }
+.progress {
+    height: 0.8em;
+    margin-top: auto;
+}
+.progress-bar {
+    background-color: var(--secondary);
+}
+.progress-bar[aria-valuenow="10"],
+.progress-bar[aria-valuenow="20"] {
+    background-color: red;
+}
+.progress-bar[aria-valuenow="30"],
+.progress-bar[aria-valuenow="40"]{
+    background-color: orangered;
+}
+.progress-bar[aria-valuenow="50"],
+.progress-bar[aria-valuenow="60"]{
+    background-color: yellow;
+    color: #373D3F;
+}
+.progress-bar[aria-valuenow="70"],
+.progress-bar[aria-valuenow="80"]{
+    background-color: yellowgreen;
+}
+.progress-bar[aria-valuenow="90"],
+.progress-bar[aria-valuenow="100"]{
+    background-color: var(--primary);
+    color: white;
+}
 .task-progress progress {
     width: 100%;
 }
@@ -406,7 +445,7 @@ progress::-moz-progress-bar ,
     filter: opacity(0.25);
 }
 .calendar_month_day_wrapper.current .day_number_wrapper, .calendar_week_day_wrapper.current .day_number_wrapper, .calendar_day_day_wrapper.current .day_number_wrapper  {
-    box-shadow: inset 0px 0px 0px 2px var(--primary-light);
+    background-color: var(--primary-background-color-accent);
 }
 #month-name, #week-name, #day-name {
     color: var(--primary-text-color);
@@ -505,7 +544,7 @@ progress::-moz-progress-bar ,
 #update-form-name-wrapper{
     margin-bottom: 10px;
 }
-#taskModal .modal-content {
+.modal .modal-content {
     color: var(--primary-text-color);
     background-color: var(--primary-background-color);
 }
@@ -589,10 +628,71 @@ progress::-moz-progress-bar ,
 input:disabled {
     opacity: 0.5;
 }
+#edit-when-started {
+    font-size: 17px;
+    color: var(--primary-text-color);
+    margin-bottom: 10px;
+}
+.delete-button {
+    background-color: red;
+    color: white;
+}
+.delete-button:hover {
+    background-color: darkred !important;
+}
+#updateSave{
+    background-color: var(--primary);
+    color: white;
+}
+#closeModal, #closeConfirmDelete, #closeConfirmDeleteAll {
+    background-color: #6C757D;
+}
+#delete-task {
+    border-radius: 5px 0 0 5px;
+}
 /*      SETTINGS        */
 .theme-toggle-wrapper {
     display: flex;
     flex-direction: row;
     width: fit-content;
 }
-.
+/*      LIST VIEW           */
+
+.data-table-wrapper *,
+#listChangeSelect, #listChangeSelect option{
+    color: var(--primary-text-color) !important;
+}
+.data-table-wrapper select, .data-table-wrapper option,
+#listChangeSelect, #listChangeSelect option{
+    background-color: var(--primary-background-color) !important;
+}
+.page-link {
+    background: var(--primary-background-color);
+    color: var(--primary-text-color);
+}
+.page-link:hover {
+    background: var(--primary-light);
+}
+.paginate_button.active .page-link {
+    background: var(--primary-accent);
+    color: white !important;
+    border-color: white;
+}
+.previous .page-link, .next .page-link {
+    background-color: var(--primary) !important;
+    color: white !important;
+}
+.data-table-wrapper input[type="search"] {
+    background: var(--primary-background-color);
+}
+#select-table-wrapper{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.data-table-wrapper thead {
+    background-color: var(--primary);
+}
+.data-table-wrapper th {
+    color: white !important;
+
+}

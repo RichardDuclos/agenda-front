@@ -1,222 +1,219 @@
-const monthName = [
-    "Janvier",
-    "Fevrier",
-    "Mars",
-    "Avril",
-    "Mai",
-    "Juin",
-    "Juillet",
-    "Août",
-    "Septembre",
-    "Octobre",
-    "Novembre",
-    "Decembre"
-]
-const dayName = [
-    "Dimanche",
-    "Lundi",
-    "Mardi",
-    "Mercredi",
-    "Jeudi",
-    "Vendredi",
-    "Samedi"
-]
-class calendarViewController extends BaseController {
-
+class listViewController extends BaseController {
     constructor() {
-        super()
+        super();
         this.isConnected()
-            .then(result =>  {
-                if(result.status !== 204) {
+            .then(result => {
+                if (result.status !== 204) {
+                    navigate("login")
                 } else {
-                    this.setTitle("Affichage des tâches");
+                    this.setTitle("Liste des tâches");
                     this.root = document.getElementById("root")
-                    this.setNavbarLinks(true, "displayTask");
-                    //this.initializeCalendar()
-                    this.calendarMonthBody = document.getElementById("calendar-month-body")
-
-                    this.monthCalendarDays = document.getElementsByClassName("calendar_month_day_wrapper")
-                    this.weekCalendarDays = document.getElementsByClassName("calendar_week_day_wrapper")
-                    this.dayCalendarDay = document.getElementsByClassName("calendar_day_day_wrapper")
-
-
-                    this.monthName = document.getElementById("month-name")
-                    this.weekName = document.getElementById("week-name")
-                    this.dayName = document.getElementById("day-name")
-
-                    this.monthCalendarPrevious = document.getElementById("month-calendar-previous")
-                    this.monthCalendarNext = document.getElementById("month-calendar-next")
-                    this.monthCalendarReset = document.getElementById("month-calendar-reset")
-                    this.monthCalendarReset.disabled = true
-                    this.monthCalendarPrevious.onclick = e => this.previousMonthHandler()
-                    this.monthCalendarNext.onclick = e => this.nextMonthHandler()
-                    this.monthCalendarReset.onclick = e => this.resetMonthHandler()
-
-                    this.weekCalendarPrevious = document.getElementById("week-calendar-previous")
-                    this.weekCalendarNext = document.getElementById("week-calendar-next")
-                    this.weekCalendarReset = document.getElementById("week-calendar-reset")
-                    this.weekCalendarReset.disabled = true
-                    this.weekCalendarPrevious.onclick = e => this.previousWeekHandler()
-                    this.weekCalendarNext.onclick = e => this.nextWeekHandler()
-                    this.weekCalendarReset.onclick = e => this.resetWeekHandler()
-
-                    this.dayCalendarPrevious = document.getElementById("day-calendar-previous")
-                    this.dayCalendarNext = document.getElementById("day-calendar-next")
-                    this.dayCalendarReset = document.getElementById("day-calendar-reset")
-                    this.dayCalendarReset.disabled = true
-                    this.dayCalendarPrevious.onclick = e => this.previousDayHandler()
-                    this.dayCalendarNext.onclick = e => this.nextDayHandler()
-                    this.dayCalendarReset.onclick = e => this.resetDayHandler()
-                    this.dayCalendarDayNameHeader = document.getElementById("calendar-day-day-name-header")
-
                     this.currentDate = new Date()
-                    this.monthCalendarSelectedYear = this.currentDate.getFullYear()
-                    this.monthCalendarSelectedMonth = this.currentDate.getMonth()
-                    this.weekCalendarSelectedWeek = this.getWeekNumber(this.currentDate)[1]
-                    this.weekCalendarSelectedYear = this.currentDate.getFullYear()
-                    this.dayCalendarSelectedDate = new Date(this.currentDate)
-                    if(this.dayCalendarSelectedDate.getDay() === 6 ||
-                        this.dayCalendarSelectedDate.getDay() === 0) {
-                        while(this.dayCalendarSelectedDate.getDay() === 6 ||
-                        this.dayCalendarSelectedDate.getDay() === 0) {
-                            this.dayCalendarSelectedDate.setDate(this.dayCalendarSelectedDate.getDate() + 1);
 
+                    this.allTasksListWrapper = document.getElementById("all-tasks-wrapper")
+                    this.allTasks = document.getElementById("all-tasks")
+                    this.allTasksBody = document.getElementById("all-tasks-body")
+
+                    this.lateTasksListWrapper = document.getElementById("late-tasks-wrapper")
+                    this.lateTasks = document.getElementById("late-tasks")
+                    this.lateTasksBody = document.getElementById("late-tasks-body")
+
+                    this.currentTasksListWrapper = document.getElementById("current-tasks-wrapper")
+                    this.currentTasks = document.getElementById("current-tasks")
+                    this.currentTasksBody = document.getElementById("current-tasks-body")
+
+                    this.futureTasksListWrapper = document.getElementById("future-tasks-wrapper")
+                    this.futureTasks = document.getElementById("future-tasks")
+                    this.futureTasksBody = document.getElementById("future-tasks-body")
+
+                    this.completedTasksListWrapper = document.getElementById("completed-tasks-wrapper")
+                    this.completedTasks = document.getElementById("completed-tasks")
+                    this.completedTasksBody = document.getElementById("completed-tasks-body")
+
+
+                    this.tables = [
+                        {
+                            name: "all",
+                            wrapper: this.allTasksListWrapper
+                        },
+                        {
+                            name: "late",
+                            wrapper: this.lateTasksListWrapper
+                        },
+                        {
+                            name: "current",
+                            wrapper: this.currentTasksListWrapper
+                        },
+                        {
+                            name: "future",
+                            wrapper: this.futureTasksListWrapper
+                        },
+                        {
+                            name: "completed",
+                            wrapper: this.completedTasksListWrapper
                         }
-                    }
-
-                    this.calendarMonth = document.getElementById("calendar-month")
-                    this.calendarWeek = document.getElementById("calendar-week")
-                    this.calendarDay = document.getElementById("calendar-day")
-                    this.calendarWeekBody = document.getElementById("calendar-week-body")
-                    this.calendarDayBody = document.getElementById("calendar-day-body")
-                    this.calendarBodies = [
-                        this.calendarWeek,
-                        this.calendarMonth,
-                        this.calendarDay
                     ]
-                    this.monthCalendarRadio = document.getElementById("radioCalendarMonth")
-                    this.monthCalendarRadio.onclick = e => this.showCalendar("month")
-                    this.weekCalendarRadio = document.getElementById("radioCalendarWeek")
-                    this.weekCalendarRadio.onclick = e => this.showCalendar("week")
-                    this.dayCalendarRadio = document.getElementById("radioCalendarDay")
-                    this.dayCalendarRadio.onclick = e => this.showCalendar("day")
-                    const favoriteCalendar = LocalStorage.getFavoriteCalendar()
-                    if(favoriteCalendar === "week") {
-                        this.weekCalendarRadio.click()
-                    } else if(favoriteCalendar === "day") {
-                        this.dayCalendarRadio.click()
-                    } else {
-                        this.monthCalendarRadio.click()
+                    this.selectChangeHandler("all")
+
+                    this.listChangeSelect = document.getElementById("listChangeSelect")
+                    this.listChangeSelect.onclick = async e => await this.selectChangeHandler(e.currentTarget.value)
+
+                    this.getAllTasksAjax = async function (data, callback, settings) {
+                        callback(
+                            await window.listViewController.getAllTasks()
+                        );
                     }
 
-                    this.showModal = document.getElementById("showModal")
-                    this.updateFormName = document.getElementById("update-form-name")
-                    this.updateFormProgress = document.getElementById("update-form-progress")
-                    this.updateFormProgressValue = document.getElementById("update-form-progress-value")
-                    this.updateFormProgress.oninput = e => this.updateFormProgressValue.innerText = e.currentTarget.value
-                    this.applyToAll = document.getElementById("applyToAll")
-                    this.applyToAllWrapper = document.getElementById("applyToAllWrapper")
-                    this.closeModal = document.getElementById("closeModal")
-                    this.updateSave = document.getElementById("updateSave")
-                    this.disabledField = false;
-                    this.editLabel = document.getElementById("editLabel")
-                    this.editUpdate = document.getElementById("editUpdate")
-                    this.saveName = ""
-                    this.saveProgress = 0
-                    this.saveApply = false
-                    this.editUpdate.onclick = e => this.toggleDisabledField()
+                    this.initializeLists()
+                        .then(result => {
 
-                    this.toggleDisabledField()
+                            this.root.classList.remove("hidden")
 
-                    this.fillCalendars().then(result => {
-                        this.root.classList.remove("hidden")
-
-                    })
-
+                        })
                 }
-            });
+            })
+
     }
-    showCalendar(calendarName) {
-        this.calendarBodies.forEach(calendar => {
-            if(calendar.getAttribute("data-name") !== calendarName) {
-                calendar.classList.add("hidden")
+    selectChangeHandler(value) {
+        for(const table of this.tables) {
+            if(table.name === value) {
+                table.wrapper.classList.remove("hidden")
             } else {
-                calendar.classList.remove("hidden")
+                table.wrapper.classList.add("hidden")
             }
+        }
+    }
+    async initializeLists() {
+        this.allTasksTable = new DataTable(this.allTasks, {
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/fr-FR.json'
+            },
+            "ajax": this.getAllTasksAjax,
         })
-
-
+        this.lateTasksTable = new DataTable(this.lateTasks, {
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/fr-FR.json'
+            },
+            "ajax": this.getLateTasksAjax,
+        })
+        this.currentTasksTable = new DataTable(this.currentTasks, {
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/fr-FR.json'
+            },
+            "ajax": this.getCurrentTasksAjax,
+        })
+        this.futureTasksTable = new DataTable(this.futureTasks, {
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/fr-FR.json'
+            },
+            "ajax": this.getFutureTasksAjax,
+        })
+        this.completedTasksTable = new DataTable(this.completedTasks, {
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/fr-FR.json'
+            },
+            "ajax": this.getCompletedTasksAjax,
+        })
     }
 
-
-    toggleDisabledField() {
-        this.disabledField = !this.disabledField
-        this.updateFormName.disabled = this.disabledField
-        this.updateFormProgress.disabled = this.disabledField
-        this.applyToAll.disabled = this.disabledField
-        if(this.disabledField) {
-            this.editLabel.innerText = "Modifier"
-            this.updateFormName.value = this.saveName
-            this.updateFormProgress.value = this.saveProgress
-            this.updateFormProgressValue.innerText = this.saveProgress
-            this.applyToAll.checked = this.saveApply
-
-        } else {
-            this.editLabel.innerText = "Annuler"
-            this.saveName = this.updateFormName.value
-            this.saveProgress = this.updateFormProgress.value
-            this.saveApply = this.applyToAll.checked
-
-        }
-    }
-
-    displayTask(task, day, displayData, calendar) {
-        const taskWrapper = day.getElementsByClassName("task-content")[0]
-        const begginingTime = task.wholeDay ? 8 : parseInt(task.begginingTime.substring(0, 2))
-
-        const endTime = task.wholeDay ? 18 : parseInt(task.endTime.substring(0, 2))
-        taskWrapper.innerHTML += this.getTaskBody(task.id, task.name, begginingTime, endTime, task.progression, displayData, calendar, task.repeatingId)
-    }
-    taskClickHandler(id, name, progress, repeatingId) {
-        this.updateFormName.value = name
-        this.updateFormProgress.value = progress
-        this.updateFormProgressValue.innerText = progress
-        const task = {
-            id: id,
-            name: name,
-            progress: progress,
-            repeatingId: repeatingId
-        }
-        if(repeatingId) {
-            this.applyToAllWrapper.classList.remove("hidden")
-        } else {
-            this.applyToAllWrapper.classList.add("hidden")
-
-        }
-        this.updateSave.onclick = e => this.updateTaskHandler(task)
-        this.showModal.click()
-    }
-    updateTaskHandler(task) {
+    async getAllTasks() {
         const taskRepository = new TaskRepository()
         const jwt = LocalStorage.getToken()
-        task.name = this.updateFormName.value
-        task.progress = this.updateFormProgress.value
-        const applyToAll = !!(task.repeatingId && this.applyToAll.checked);
-        taskRepository.update(jwt, task, applyToAll)
-            .then(result => {
-                console.log(result)
-                if(!this.disabledField) {
-                    this.toggleDisabledField()
-                }
-                this.fillCalendars()
-                this.closeModal.click()
-            })
-            .catch(error => {
-                console.log(error)
-            })
+        const tasks = await taskRepository.getAll(jwt)
+        let result = await window.listViewController.formatTask(tasks)
+        return {
+            "data" : result
+        }
+    }
+    getLateTasksAjax = async function (data, callback, settings) {
+        callback(
+            await window.listViewController.getLateTasks()
+        );
+    }
+    async getLateTasks() {
+        const taskRepository = new TaskRepository()
+        const jwt = LocalStorage.getToken()
+        const tasks = await taskRepository.getAll(jwt)
+        let result = await window.listViewController.formatTask(tasks)
+        result = result.filter(task => {
+            const parts = task[3].match(/(\d+)/g);
+            const date = new Date(parts[2], parts[1]-1, parts[0])
+            const progress = parseInt(task[4])
+            return (date < this.currentDate) && (progress === 0)
+        })
+        return {
+            "data" : result
+        }
+    }
+    getCurrentTasksAjax = async function (data, callback, settings) {
+        callback(
+            await window.listViewController.getCurrentTasks()
+        );
+    }
+    async getCurrentTasks() {
+        const taskRepository = new TaskRepository()
+        const jwt = LocalStorage.getToken()
+        const tasks = await taskRepository.getAll(jwt)
+        let result = await window.listViewController.formatTask(tasks)
+        result = result.filter(task => {
+            const parts = task[3].match(/(\d+)/g);
+            const progress = parseInt(task[4])
+            const date = new Date(parts[2], parts[1]-1, parts[0])
+            return (date < this.currentDate) && ((progress > 0) && (progress < 100) )
+        })
+        return {
+            "data" : result
+        }
+    }
+    getFutureTasksAjax = async function (data, callback, settings) {
+        callback(
+            await window.listViewController.getFutureTasks()
+        );
+    }
+    async getFutureTasks() {
+        const taskRepository = new TaskRepository()
+        const jwt = LocalStorage.getToken()
+        const tasks = await taskRepository.getAll(jwt)
+        let result = await window.listViewController.formatTask(tasks)
+        result = result.filter(task => {
+            const parts = task[3].match(/(\d+)/g);
+            const date = new Date(parts[2], parts[1]-1, parts[0])
+            return (date > this.currentDate)
+        })
+        return {
+            "data" : result
+        }
+    }
+    getCompletedTasksAjax = async function (data, callback, settings) {
+        callback(
+            await window.listViewController.getCompletedTasks()
+        );
+    }
+    async getCompletedTasks() {
+        const taskRepository = new TaskRepository()
+        const jwt = LocalStorage.getToken()
+        const tasks = await taskRepository.getAll(jwt)
+        let result = await window.listViewController.formatTask(tasks)
+        result = result.filter(task => {
+            const parts = task[3].match(/(\d+)/g);
+            const progress = parseInt(task[4])
+            console.log(progress)
+            const date = new Date(parts[2], parts[1]-1, parts[0])
+            return (progress === 100)
+        })
+        return {
+            "data" : result
+        }
+    }
+    formatTask(tasks) {
+        return tasks.map(task => {
+            const begginingTime = (task.wholeDay ? '8:00' : `${parseInt(task.begginingTime.substring(0, 2))}:00`.padStart(5, '0') )
+            const endTime = (task.wholeDay ? '18:00' : `${parseInt(task.endTime.substring(0, 2))}:00`)
+            const date = task.wholeDay ? task.begginingDate : task.date
+            return [task.name, begginingTime, endTime, date.toLocaleDateString("fr"), `${task.progression}%`]
+        } )
     }
 
 
 }
-
-window.calendarViewController = new calendarViewController()
+window.listViewController = new listViewController()

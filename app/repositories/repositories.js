@@ -17,9 +17,9 @@ class TaskRepository {
     constructor() {
 
     }
-    async create (token, name, date, begginingDate, endDate, wholeDay, begginingTime, endTime, frequency) {
+    async create (token, name, date, begginingDate, endDate, wholeDay, begginingTime, endTime, frequency, dayOfWeek, dayOfMonth) {
         let agendaAPI = new AgendaAPI()
-        return await agendaAPI.postTask(token, name, date, begginingDate, endDate, wholeDay, begginingTime, endTime, frequency)
+        return await agendaAPI.postTask(token, name, date, begginingDate, endDate, wholeDay, begginingTime, endTime, frequency, dayOfWeek, dayOfMonth)
     }
     async getAll(token) {
         let agendaAPI = new AgendaAPI()
@@ -48,7 +48,11 @@ class TaskRepository {
     async update(token, task, applyToAll) {
 
         const agendaAPI = new AgendaAPI()
-        return await agendaAPI.putTask(token, task.id, task.name, task.progress, task.repeatingId, applyToAll)
+        return await agendaAPI.putTask(token, task, applyToAll)
+    }
+    async delete(token, task, applyToAll) {
+        const agendaAPI = new AgendaAPI()
+        return await agendaAPI.deleteTask(token, task, applyToAll)
     }
 
 }
