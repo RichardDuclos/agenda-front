@@ -53,6 +53,10 @@ class addTaskController extends BaseController {
                     this.missingWholedayBegginingDate = document.getElementById("missingWholedayBegginingDate")
                     this.missingWholedayEndDate = document.getElementById("missingWholedayEndDate")
                     this.mustBeSuperiorThanBegginingTime = document.getElementById("mustBeSuperiorThanBegginingTime")
+                    this.dailyMustBeSuperiorThanBegginingDate = document.getElementById("dailyMustBeSuperiorThanBegginingDate")
+                    this.weeklyMustBeSuperiorThanBegginingDate = document.getElementById("weeklyMustBeSuperiorThanBegginingDate")
+                    this.monthlyMustBeSuperiorThanBegginingDate = document.getElementById("monthlyMustBeSuperiorThanBegginingDate")
+                    this.wholedayMustBeSuperiorThanBegginingDate = document.getElementById("wholedayMustBeSuperiorThanBegginingDate")
                     this.errors = [
                         {
                             name: "unknown",
@@ -109,6 +113,22 @@ class addTaskController extends BaseController {
                         {
                             name: "must-be-superior-than-beggining-time",
                             element: this.mustBeSuperiorThanBegginingTime
+                        },
+                        {
+                            name: "weekly-must-be-superior-than-beggining-date",
+                            element: this.weeklyMustBeSuperiorThanBegginingDate
+                        },
+                        {
+                            name: "daily-must-be-superior-than-beggining-date",
+                            element: this.dailyMustBeSuperiorThanBegginingDate
+                        },
+                        {
+                            name: "monthly-must-be-superior-than-beggining-date",
+                            element: this.monthlyMustBeSuperiorThanBegginingDate
+                        },
+                        {
+                            name: "wholeday-must-be-superior-than-beggining-date",
+                            element: this.wholedayMustBeSuperiorThanBegginingDate
                         }
 
                     ]
@@ -362,6 +382,27 @@ class addTaskController extends BaseController {
                         if(error.msg === "must-be-superior-than-beggining-time") {
                             this.showError("must-be-superior-than-beggining-time")
                             this.endTimePicker.classList.add("is-invalid")
+
+                        }
+                        if(error.msg === "must-be-superior-than-beggining-date") {
+                            if(wholeDay) {
+                                this.showError("wholeday-must-be-superior-than-beggining-date")
+                                this.endDatePicker.classList.add("is-invalid")
+
+                            }
+                            if(frequency === 1) {
+                                this.showError("daily-must-be-superior-than-beggining-date")
+                                this.dailyEndDatePicker.classList.add("is-invalid")
+
+                            }
+                            if(frequency === 2) {
+                                this.showError("weekly-must-be-superior-than-beggining-date")
+                                this.weeklyEndDatePicker.classList.add("is-invalid")
+                            }
+                            if(frequency === 3) {
+                                this.showError("monthly-must-be-superior-than-beggining-date")
+                                this.monthlyEndDatePicker.classList.add("is-invalid")
+                            }
 
                         }
 

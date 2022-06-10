@@ -1,33 +1,35 @@
 <div id="root" class=" hidden">
-    <div class="container">
+    <div class="container" id="settingsContainer">
         <h1>Paramètres</h1>
-    </div>
-    <div>Thème</div>
-    <div class="theme-toggle-wrapper">
-        <img src="res/sun.png" class="theme-icon" />
-        <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="themeSwitch">
+
+        <h3>Thème</h3>
+        <div class="theme-toggle-wrapper">
+            <img src="res/sun.png" class="theme-icon" />
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="themeSwitch">
+            </div>
+            <img src="res/moon.png" class="theme-icon" />
         </div>
-        <img src="res/moon.png" class="theme-icon" />
+        <h3>Calendrier à afficher au démarrage</h3>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="monthCalendarRadio">
+            <label class="form-check-label" for="monthCalendarRadio">
+                Mensuel
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="weekCalendarRadio" >
+            <label class="form-check-label" for="weekCalendarRadio">
+                Hebdomadaire
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="dayCalendarRadio" >
+            <label class="form-check-label" for="dayCalendarRadio">
+                Journalier
+            </label>
+        </div>
     </div>
-    <div>Calendrier à afficher au démarrage</div>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="monthCalendarRadio">
-        <label class="form-check-label" for="monthCalendarRadio">
-            Mensuel
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="weekCalendarRadio" >
-        <label class="form-check-label" for="weekCalendarRadio">
-            Hebdomadaire
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="dayCalendarRadio" >
-        <label class="form-check-label" for="dayCalendarRadio">
-            Journalier
-        </label>
-    </div>
+
 
 </div>

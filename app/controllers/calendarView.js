@@ -105,7 +105,13 @@ class calendarViewController extends BaseController {
                     this.weekCalendarRadio.onclick = e => this.showCalendar("week")
                     this.dayCalendarRadio = document.getElementById("radioCalendarDay")
                     this.dayCalendarRadio.onclick = e => this.showCalendar("day")
-                    const favoriteCalendar = LocalStorage.getFavoriteCalendar()
+                    let favoriteCalendar;
+                    if(!window.favoriteCalendar) {
+                        favoriteCalendar = LocalStorage.getFavoriteCalendar()
+                    } else {
+                        favoriteCalendar = window.favoriteCalendar
+                    }
+
                     if(favoriteCalendar === "week") {
                         this.weekCalendarRadio.click()
                     } else if(favoriteCalendar === "day") {
@@ -152,6 +158,7 @@ class calendarViewController extends BaseController {
 
     }
     showCalendar(calendarName) {
+        window.favoriteCalendar = calendarName
         this.calendarBodies.forEach(calendar => {
             if(calendar.getAttribute("data-name") !== calendarName) {
                 calendar.classList.add("hidden")

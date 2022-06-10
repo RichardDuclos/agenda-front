@@ -58,10 +58,14 @@
                     <div class="error form-error hidden" id="missingDailyBegginingDate">
                         Ce champ est requis
                     </div>
+
                     <label class="form-label" for="dailyEndDatePicker">Au</label>
                     <input type="date" name="" id="dailyEndDatePicker" class="form-control">
                     <div class="error form-error hidden" id="missingDailyEndDate">
                         Ce champ est requis
+                    </div>
+                    <div class="error form-error hidden" id="dailyMustBeSuperiorThanBegginingDate">
+                        La date de fin doit etre ultérieure à la date de début
                     </div>
                 </div>
                 <div id="weekly-fields">
@@ -70,10 +74,14 @@
                     <div class="error form-error hidden" id="missingWeeklyBegginingDate">
                         Ce champ est requis
                     </div>
+
                     <label class="form-label" for="weeklyEndDatePicker">Au</label>
                     <input type="date" name="" id="weeklyEndDatePicker" class="form-control">
                     <div class="error form-error hidden" id="missingWeeklyEndDate">
                         Ce champ est requis
+                    </div>
+                    <div class="error form-error hidden" id="weeklyMustBeSuperiorThanBegginingDate">
+                        La date de fin doit etre ultérieure à la date de début
                     </div>
                     <label class="form-label">Jour de la semaine</label>
                     <select id="dayOfWeekPicker" class="form-control">
@@ -94,6 +102,9 @@
                     <input type="date" name="" id="monthlyEndDatePicker" class="form-control">
                     <div class="error form-error hidden" id="missingMonthlyEndDate">
                         Ce champ est requis
+                    </div>
+                    <div class="error form-error hidden" id="monthlyMustBeSuperiorThanBegginingDate">
+                        La date de fin doit etre ultérieure à la date de début
                     </div>
                     <label class="form-label">Numéro mensuel</label>
                     <select id="dayOfMonthPicker" class="form-control">
@@ -181,6 +192,9 @@
                     <input type="date" name="" id="endDatePicker" class="form-control">
                     <div class="error form-error hidden" id="missingWholedayEndDate">
                         Ce champ est requis
+                    </div>
+                    <div class="error form-error hidden" id="wholedayMustBeSuperiorThanBegginingDate">
+                        La date de fin doit etre ultérieure à la date de début
                     </div>
                 </div>
             </div>

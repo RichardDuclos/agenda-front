@@ -655,6 +655,20 @@ input:disabled {
     display: flex;
     flex-direction: row;
     width: fit-content;
+    margin: auto;
+    transform: scale(1.5);
+    margin-bottom: 20px;
+}
+#settingsContainer{
+    color: var(--primary-text-color);
+    max-width: 600px;
+    margin-top: 20px;
+}
+#settingsContainer h1 {
+    margin-bottom: 20px;
+}
+#settingsContainer h2 {
+    margin-bottom: 20px;
 }
 /*      LIST VIEW           */
 
