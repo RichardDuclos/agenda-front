@@ -497,7 +497,7 @@ class calendarViewController extends BaseController {
         const taskRepository = new TaskRepository()
         const jwt = LocalStorage.getToken()
         task.name = this.updateFormName.value
-        task.progress = this.updateFormProgress.value
+        task.progression = this.updateFormProgress.value
         const applyToAll = !!(task.repeatingId && this.applyToAll.checked);
         taskRepository.update(jwt, task, applyToAll)
             .then(result => {

@@ -102,7 +102,6 @@ class AgendaAPI {
                     }
                 })
                 .catch(error => {
-                    baseController.toast("no-connection")
                     reject({status: 999, response: null})
                 })
 

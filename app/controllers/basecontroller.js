@@ -1,3 +1,5 @@
+let online = window.navigator.onLine;
+
 class BaseController {
 
     constructor() {
@@ -8,6 +10,17 @@ class BaseController {
 
         this.setTheme();
         this.mainSpinner = document.getElementById("main-spinner");
+        setInterval(function() {
+            if(!window.navigator.onLine) {
+                if(online === true) {
+                    baseController.toast("no-connection")
+                }
+
+                online = false
+            } else {
+                online = true
+            }
+        }, 1000)
     }
 
     setTheme() {
